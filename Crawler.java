@@ -9,6 +9,7 @@ import IRUtilities.*;
 import jdbm.RecordManager;
 import jdbm.RecordManagerFactory;
 
+import java.util.Arrays;
 import java.util.Vector;
 
 import org.htmlparser.beans.StringBean;
@@ -168,10 +169,31 @@ public class Crawler
 		return childLink;
 	}
 	
+	public Vector<Integer> getpopword()
+	{
+		Integer[] abc = new Integer[freq.size()];
+		freq.toArray(abc);
+		Arrays.sort(abc);
+		Vector<Integer> a = new Vector<Integer>(5);
+		Vector<Integer> b = (Vector<Integer>) freq.clone();
+		int x = freq.size();
+		for(int i = x-1; i > x-6; i--)
+		{
+			if(x<0)
+				break;
+			int y = abc[i];
+			int z = b.indexOf(y);
+			a.add(z);
+			b.setElementAt(-1, z);
+		}
+		return a;
+	}
+	
 	public String getTitle()
 	{
 		try
 		{
+			
 			Parser abc = new Parser (url);
 	        NodeFilter nFilter = new NodeClassFilter(TitleTag.class);
 	        NodeList nList = abc.parse(nFilter);
@@ -185,8 +207,40 @@ public class Crawler
 	               title = titlenode.getTitle();
 	           }
 	        }
-	        
 	        return title;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}
+	
+	public Vector<String> getTitle1()
+	{
+		try
+		{
+			
+			Parser abc = new Parser (url);
+	        NodeFilter nFilter = new NodeClassFilter(TitleTag.class);
+	        NodeList nList = abc.parse(nFilter);
+	        Node[] nodes = nList.toNodeArray();
+	        String title ="";
+	        for(int i=0;i<nodes.length;i++){
+	           Node node = nodes[i];
+	           if(node instanceof TitleTag)
+	           {
+	               TitleTag titlenode = (TitleTag) node;
+	               title = titlenode.getTitle();
+	           }
+	        }
+	        Vector<String> title1 = new Vector<String>(0);
+	        for(String s: title.split(" "))
+	        {
+	        	title1.addElement(s);
+	        }
+	        if(title1.size() == 0)
+	        	title1.addElement("No title");
+	        return title1;
 		}
 		catch (Exception e)
 		{
@@ -304,12 +358,13 @@ public class Crawler
 			
 			Vector<String> word1 = crawler.getuniwords();
 			Vector<Integer> freq = crawler.getfreq();
-			Vector<Integer> posi = crawler.getPosi(1);
+			/*Vector<Integer> posi = crawler.getPosi(1);
 			for(int i = 0; i < posi.size(); i++)
 			{
 				System.out.print(posi.get(i)+" ");
 			}
 			System.out.println("\n");
+			*/
 			for(int i = 0; i < word1.size(); i++)
 			{
 				System.out.print(word1.get(i)+" ");
@@ -325,23 +380,32 @@ public class Crawler
 				System.out.println(links.get(i));
 			System.out.println("");
 			System.out.println(crawler.getTitle());
+			Vector<String> title = crawler.getTitle1();
+			for(int i = 0; i < title.size(); i++)		
+				System.out.print(title.get(i));
+			System.out.println("\n");
 			System.out.println(new Date(crawler.getLastModifiedDate()));
 			System.out.println(crawler.getSize());
+			Vector<Integer> pop = crawler.getpopword();
+			for(int i = 0; i < pop.size(); i++)
+				System.out.println(word1.get(pop.get(i)) + " " + freq.get(pop.get(i)) + " "+ pop.get(i));
 			
 			//-----------
+			
 			for(int i = 0; i < word1.size(); i++)
 			{
 				word_storage.insertWord(word1.get(i));
 				word_storage.insertWordTF(word_storage.getWordID(word1.get(i)), page_storage.getId(crawler.geturl()), freq.get(i), crawler.getPosi(i), true);
 			}
 			word_storage.printall();
+			
 		}
 		catch (ParserException e)
         {
 			e.printStackTrace ();
         }
-		recman.commit();
-		recman.close();
+		//recman.commit();
+		//recman.close();
 
 	}
 }
