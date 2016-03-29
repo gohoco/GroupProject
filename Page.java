@@ -65,8 +65,11 @@ public class Page {
 	}
 	
 	public void insertPage(String url) throws IOException{
-		String id = String.format("%08d", pageCount++);
-		pageId.addEntry(url, id);
+		String id;
+		if(pageId.getEntry(url) == null){
+			id = String.format("%08d", pageCount++);
+			pageId.addEntry(url, id);
+		}
 	}
 	
 	public void insertPageInfo(String id, PageInfoStruct new_page) throws IOException{

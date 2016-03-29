@@ -49,11 +49,18 @@ public class Word {
 	/**insert a new word**/
 	public String insertWord(String uniword) throws IOException
 	{
-		String id = String.format("%08d", wordCount++);
-		
-		wordID.addEntry(uniword, id);
-		word.addEntry(id, uniword);
-		return id;
+		String id;
+		if(wordID.getEntry(uniword) == null){
+			id = String.format("%08d", wordCount++);
+			
+			wordID.addEntry(uniword, id);
+			word.addEntry(id, uniword);
+			
+			return id;
+		}else{
+			id = (String)wordID.getEntry(uniword);
+			return id;
+		}
 	}
 	
 	/**get word_id**/

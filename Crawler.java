@@ -90,6 +90,9 @@ public class Crawler
 		{
 			StopStem x = new StopStem("stopwords.txt");
 			String y = x.stem(words.get(i));
+			if(y==null || y=="" || x.isStopWord(y))
+				continue;
+			
 			if(!uniwords.contains(y))
 			{
 				uniwords.addElement(y);
@@ -329,12 +332,9 @@ public class Crawler
 			for(int i = 0; i < word1.size(); i++)
 			{
 				word_storage.insertWord(word1.get(i));
-				if(word_storage.getWordID(word1.get(i))==null)
-					continue;
-				word_storage.insertWordTF(word_storage.getWordID(word1.get(i)), page_storage.getId(crawler.geturl()), freq.get(i), posi, true);
+				word_storage.insertWordTF(word_storage.getWordID(word1.get(i)), page_storage.getId(crawler.geturl()), freq.get(i), crawler.getPosi(i), true);
 			}
 			word_storage.printall();
-			
 		}
 		catch (ParserException e)
         {
