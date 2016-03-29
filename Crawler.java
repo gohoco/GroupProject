@@ -333,6 +333,7 @@ public class Crawler
 					continue;
 				word_storage.insertWordTF(word_storage.getWordID(word1.get(i)), page_storage.getId(crawler.geturl()), freq.get(i), posi, true);
 			}
+			word_storage.printall();
 			
 		}
 		catch (ParserException e)

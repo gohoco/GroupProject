@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import org.htmlparser.util.ParserException;
 import jdbm.RecordManager;
+import jdbm.helper.FastIterator;
 
 class Posting implements Serializable {
 	public String page_id;
@@ -227,5 +228,14 @@ public class Word {
 		recman.commit();
 		recman.close();				
 	} 
+	
+	public void printall() throws IOException
+	{
+		FastIterator fi = wordID.getIterator();
+		String key;
+		while((key = (String)fi.next()) != null){
+			System.out.println(key + " = " + wordID.getEntry(key));
+		}
+	}
 
 }
