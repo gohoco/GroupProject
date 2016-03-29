@@ -389,6 +389,7 @@ public class Crawler
 			Vector<Integer> pop = crawler.getpopword();
 			for(int i = 0; i < pop.size(); i++)
 				System.out.println(word1.get(pop.get(i)) + " " + freq.get(pop.get(i)) + " "+ pop.get(i));
+			System.out.println("");
 			
 			//-----------
 			
@@ -404,8 +405,8 @@ public class Crawler
         {
 			e.printStackTrace ();
         }
-		//recman.commit();
-		//recman.close();
+		recman.commit();
+		recman.close();
 
 	}
 }
