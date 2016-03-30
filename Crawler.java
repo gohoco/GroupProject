@@ -1,10 +1,5 @@
-/* --
-COMP4321 Lab2 Exercise
-Student Name:
-Student ID:
-Section:
-Email:
-*/
+package groupCOMP4321;
+
 import IRUtilities.*;
 import jdbm.RecordManager;
 import jdbm.RecordManagerFactory;
@@ -143,7 +138,6 @@ public class Crawler
 			length += b.length();
 			//System.out.println(b);
 	    }
-
 		//v.addElement(sb.getStrings());
 		//System.out.println(sb.getStrings());
 		 
@@ -340,6 +334,7 @@ public class Crawler
 		RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
 		Word word_storage = new Word(recman);
 		Page page_storage = new Page(recman);
+		ranking findParentAndChild = new ranking(recman);
 		
 		try
 		{
@@ -399,6 +394,27 @@ public class Crawler
 				word_storage.insertWordTF(word_storage.getWordID(word1.get(i)), page_storage.getId(crawler.geturl()), freq.get(i), crawler.getPosi(i), true);
 			}
 			word_storage.printall();
+			
+			
+			System.out.println("...................................................");
+			System.out.println("...................................................");
+			System.out.println("...................................................");
+			System.out.println("...................................................");
+			System.out.println("...................................................");
+			for(int i=0; i<30 ; i++){
+				Crawler newCrawler = new Crawler(links.get(i));
+				findParentAndChild.insertChild(links.get(i), newCrawler.extractLinks());
+			}
+			
+			ranking.printParent();
+			System.out.println("...................................................");
+			System.out.println("...................................................");
+			System.out.println("...................................................");
+			ranking.printChild();
+			
+			
+			
+			System.out.println("Finished");
 			
 		}
 		catch (ParserException e)
