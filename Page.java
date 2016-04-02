@@ -9,6 +9,7 @@ import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.ParserException;
 
 import jdbm.RecordManager;
+import jdbm.helper.FastIterator;
 /**
  * 
  * 
@@ -74,6 +75,16 @@ public class Page {
 	
 	public void insertPageInfo(String id, PageInfoStruct new_page) throws IOException{
 		pageInfo.addEntry(id, new_page);
+	}
+	
+	public FastIterator getIterator() throws IOException
+	{
+		//return the keys
+		return pageId.getIterator();
+	}
+	
+	public PageInfoStruct getPage(String id) throws IOException{
+		return (PageInfoStruct)pageInfo.getEntry(id);
 	}
 }
 
