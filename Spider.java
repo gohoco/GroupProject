@@ -97,6 +97,7 @@ public class Spider
 			{
 				word_storage.insertWord(uni_word.get(i));
 				word_storage.insertWordTF(word_storage.getWordID(uni_word.get(i)), page_storage.getId(crawler.geturl()), freq_uni_word.get(i), crawler.getPosi(i), true);
+				word_storage.insertInvertedWord(page_storage.getId(crawler.geturl()), uni_word.get(i), freq_uni_word.get(i), true);
 			}
 			
 			
@@ -109,7 +110,6 @@ public class Spider
 				page_storage.insertPage(crawler.geturl());
 				pagestruc = new PageInfoStruct(crawler.geturl(), crawler.getTitle(), crawler.getLastModifiedDate(), crawler.getSize());
 				page_storage.insertPageInfo(page_storage.getId(crawler.geturl()), pagestruc);
-				
 				uni_word = crawler.getuniwords();
 				freq_uni_word = crawler.getfreq();
 				title_word = crawler.getTitle1();//no freq for title is provided
@@ -117,10 +117,12 @@ public class Spider
 				{
 					word_storage.insertWord(uni_word.get(j));
 					word_storage.insertWordTF(word_storage.getWordID(uni_word.get(j)), page_storage.getId(crawler.geturl()), freq_uni_word.get(j), crawler.getPosi(j), true);
+					word_storage.insertInvertedWord(page_storage.getId(crawler.geturl()), uni_word.get(j), freq_uni_word.get(j), true);
 				}
 				
 			}
 			word_storage.printall();
+			page_storage.printall();
 				
 //			Vector<String> words = crawler.extractWords();		
 //			

@@ -244,5 +244,74 @@ public class Word {
 			System.out.println(key + " = " + wordID.getEntry(key));
 		}
 	}
+	
+	public void printTopFiveFeq(String pageid) throws IOException
+	{
+		Vector<InvertPosting> ip = null;
+		if(invertedBodyWord.getEntry(pageid) != null)
+			ip = (Vector<InvertPosting>)invertedBodyWord.getEntry(pageid);
+		else
+			return;
+		
+//		Vector<InvertPosting> sorted_ip = new Vector<InvertPosting>();
+//		InvertPosting rank1 = null;
+//		InvertPosting rank2 = null;
+//		InvertPosting rank3 = null;
+//		InvertPosting rank4 = null;
+//		InvertPosting rank5 = null;
+//		for(InvertPosting iplist : ip)
+//		{
+//			if(rank1 == null)
+//				rank1 = iplist;
+//			else if(rank2 == null && iplist.freq<=rank1.freq)
+//				rank2 = iplist;
+//			else if(rank3 == null)
+//				rank3 = iplist;
+//			else if(rank4 == null)
+//				rank4 = iplist;
+//			else if(rank5 == null)
+//				rank5 = iplist;
+//			else
+//			{
+//				if(rank1.freq < iplist.freq)
+//					rank1 = iplist;
+//				else if(rank2.freq < iplist.freq)
+//					rank2 = iplist;
+//				else if(rank3.freq < iplist.freq)
+//					rank3 = iplist;
+//				else if(rank4.freq < iplist.freq)
+//					rank4 = iplist;
+//				else if(rank5.freq < iplist.freq)
+//					rank5 = iplist;
+//			}
+//		}
+//
+//		if(rank1 != null)
+//			sorted_ip.add(rank1);
+//		if(rank2 != null)
+//			sorted_ip.add(rank2);
+//		if(rank3 != null)
+//			sorted_ip.add(rank3);
+//		if(rank4 != null)
+//			sorted_ip.add(rank4);
+//		if(rank5 != null)
+//			sorted_ip.add(rank5);
+//		
+//		for(int i=1; i < sorted_ip.size() ; i++)
+//		{
+//			InvertPosting temp = sorted_ip.get(i);
+//			int j;
+//			for(j=i-1; j >= 0 && temp.freq > sorted_ip.get(j).freq ; j--)
+//				sorted_ip.set(j+1, sorted_ip.get(j));
+//			sorted_ip.set(j+1, temp);
+//		}
+		
+		for(InvertPosting iplist : ip)
+		{
+			System.out.print(iplist.word_id + " " + iplist.freq + "; ");
+		}
+		System.out.println();
+
+	}
 
 }

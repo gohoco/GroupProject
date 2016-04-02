@@ -86,5 +86,14 @@ public class Page {
 	public PageInfoStruct getPage(String id) throws IOException{
 		return (PageInfoStruct)pageInfo.getEntry(id);
 	}
+	
+	public void printall() throws IOException
+	{
+		FastIterator fi = pageId.getIterator();
+		String key;
+		while((key = (String)fi.next()) != null){
+			System.out.println(key + " = " + pageId.getEntry(key));
+		}
+	}
 }
 
