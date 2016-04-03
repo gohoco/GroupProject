@@ -199,13 +199,16 @@ public class Crawler
 	           {
 	               TitleTag titlenode = (TitleTag) node;
 	               title = titlenode.getTitle();
+	               break;
 	           }
 	        }
+	        if(title.length() == 0)
+	        	title += "No title";
 	        return title;
 		}
 		catch (Exception e)
 		{
-			return null;
+			return new String("Not found");
 		}
 	}
 	
@@ -225,6 +228,7 @@ public class Crawler
 	           {
 	               TitleTag titlenode = (TitleTag) node;
 	               title = titlenode.getTitle();
+	               break;
 	           }
 	        }
 	        Vector<String> title1 = new Vector<String>(0);
@@ -238,7 +242,9 @@ public class Crawler
 		}
 		catch (Exception e)
 		{
-			return null;
+			Vector<String> k = new Vector<String>(0);
+			k.addElement("Not found");
+			return k;
 		}
 	}
 	
