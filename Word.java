@@ -1,3 +1,4 @@
+package groupCOMP4321;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -228,6 +229,10 @@ public class Word {
 	public long getPageSize()
 	{
 		return pageSize;
+	}
+	
+	public HashStruc getInvertedBodyWord(){
+		return invertedBodyWord;
 	}
 	
 	public void finalize() throws IOException

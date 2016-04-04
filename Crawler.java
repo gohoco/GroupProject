@@ -340,7 +340,7 @@ public class Crawler
 		RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
 		Word word_storage = new Word(recman);
 		Page page_storage = new Page(recman);
-		ranking findParentAndChild = new ranking(recman);
+		PageRank findParentAndChild = new PageRank(recman);
 		
 		try
 		{
@@ -405,20 +405,27 @@ public class Crawler
 			System.out.println("...................................................");
 			System.out.println("...................................................");
 			System.out.println("...................................................");
-			System.out.println("...................................................");
-			System.out.println("...................................................");
 			for(int i=0; i<30 ; i++){
-				Crawler newCrawler = new Crawler(links.get(i));
-				findParentAndChild.insertChild(links.get(i), newCrawler.extractLinks());
+				System.out.println(page_storage.getId(links.get(i)));
 			}
+			System.out.println("...................................................");
+			System.out.println("...................................................");
+	
+			//for(int i=0; i<30 ; i++){
+				Crawler newCrawler = new Crawler("http://cssystem.cse.ust.hk/UGuides/csd_manage.html");
+				findParentAndChild.insertChild("http://cssystem.cse.ust.hk/UGuides/csd_manage.html", newCrawler.extractLinks(), page_storage);
+			//}
 			
-			ranking.printParent();
+			//ranking.printParent();
 			System.out.println("...................................................");
 			System.out.println("...................................................");
 			System.out.println("...................................................");
-			ranking.printChild();
+			PageRank.printChild();
 			
-			
+			if(newCrawler.extractLinks()==null)
+				System.out.println(".........................1..........................");
+			else
+				System.out.println(newCrawler.extractLinks().get(0));
 			
 			System.out.println("Finished");
 			

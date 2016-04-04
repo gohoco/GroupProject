@@ -1,3 +1,5 @@
+package groupCOMP4321;
+
 import IRUtilities.*;
 import jdbm.RecordManager;
 import jdbm.RecordManagerFactory;
@@ -74,6 +76,7 @@ public class Spider
 		RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
 		Word word_storage = new Word(recman);
 		Page page_storage = new Page(recman);
+		PageRank findParentAndChild = new PageRank(recman);
 		
 		try
 		{
@@ -121,9 +124,21 @@ public class Spider
 				}
 				
 			}
-			word_storage.printall();
+			//word_storage.printall();
 			page_storage.printall();
+			System.out.println("...................................................");
+			System.out.println("...................................................");
+			
+			for(int i = 0; i < ef.size(); i++){
+				crawler = new Crawler(ef.get(i));
+				findParentAndChild.insertChild(ef.get(i), crawler.extractLinks(), page_storage);
 				
+			}
+			
+			System.out.println("...................................................");
+			System.out.println("...................................................");
+			PageRank.printParent();
+			//ranking.printChild();
 //			Vector<String> words = crawler.extractWords();		
 //			
 //			System.out.println("Words in "+crawler.geturl()+":");
