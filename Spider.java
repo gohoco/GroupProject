@@ -1,4 +1,3 @@
-package groupCOMP4321;
 
 import IRUtilities.*;
 import jdbm.RecordManager;
@@ -88,22 +87,24 @@ public class Spider
 			Spider x = new Spider();
 			Vector<String> ef = x.spider(ab, cd, 30);
 //----------------------insert word + page for cse.ust.hk-------------
-			System.out.println("Inserting for page "+ crawler.geturl());
-			page_storage.insertPage(crawler.geturl());
-			PageInfoStruct pagestruc = new PageInfoStruct(crawler.geturl(), crawler.getTitle(), crawler.getLastModifiedDate(), crawler.getSize());
-			page_storage.insertPageInfo(page_storage.getId(crawler.geturl()), pagestruc);
-			
-			Vector<String> uni_word = crawler.getuniwords();
-			Vector<Integer> freq_uni_word = crawler.getfreq();
-			Vector<String> title_word = crawler.getTitle1();//no freq
-			for(int i = 0; i < uni_word.size(); i++)
-			{
-				word_storage.insertWord(uni_word.get(i));
-				word_storage.insertWordTF(word_storage.getWordID(uni_word.get(i)), page_storage.getId(crawler.geturl()), freq_uni_word.get(i), crawler.getPosi(i), true);
-				word_storage.insertInvertedWord(page_storage.getId(crawler.geturl()), uni_word.get(i), freq_uni_word.get(i), true);
-			}
-			
-			
+//			System.out.println("Inserting for page "+ crawler.geturl());
+//			page_storage.insertPage(crawler.geturl());
+//			PageInfoStruct pagestruc = new PageInfoStruct(crawler.geturl(), crawler.getTitle(), crawler.getLastModifiedDate(), crawler.getSize());
+//			page_storage.insertPageInfo(page_storage.getId(crawler.geturl()), pagestruc);
+//			
+//			Vector<String> uni_word = crawler.getuniwords();
+//			Vector<Integer> freq_uni_word = crawler.getfreq();
+//			Vector<String> title_word = crawler.getTitle1();//no freq
+//			for(int i = 0; i < uni_word.size(); i++)
+//			{
+//				word_storage.insertWord(uni_word.get(i));
+//				word_storage.insertWordTF(word_storage.getWordID(uni_word.get(i)), page_storage.getId(crawler.geturl()), freq_uni_word.get(i), crawler.getPosi(i), true);
+//				word_storage.insertInvertedWord(page_storage.getId(crawler.geturl()), uni_word.get(i), freq_uni_word.get(i), true);
+//			}
+			PageInfoStruct pagestruc;
+			Vector<String> uni_word;
+			Vector<Integer> freq_uni_word;
+			Vector<String> title_word;//no freq
 //-------------------------------insert word + page--------------	
 			for(int i = 0; i < ef.size(); i++)
 			{
@@ -126,7 +127,7 @@ public class Spider
 			}
 			//word_storage.printall();
 			page_storage.printall();
-			System.out.println("....................Wait...........................");
+			System.out.println("....................inserting their childs...........................");
 			
 			for(int i = 0; i < ef.size(); i++){
 				crawler = new Crawler(ef.get(i));

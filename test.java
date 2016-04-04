@@ -1,4 +1,3 @@
-package groupCOMP4321;
 
 import java.io.IOException;
 import java.util.Vector;
@@ -24,29 +23,29 @@ public class test {
 		String key;
 		PageInfoStruct pis;
 		System.out.println("Start printing...");
-		int counter = 1;
+		//int counter = 1;
 		while((key = (String)fi.next()) != null)
 		{
-			out.print("Page[" + counter++ + "] ");
+			//out.print("Page[" + counter++ + "] ");
 			pis = page_storage.getPage(page_storage.getId(key));
 			if(pis==null)
 				out.println("pis is null  " + key);
 			out.println(pis.getTitle());
 			out.println(pis.getURL());
 			out.println(pis.getLastModification() + ", " + pis.getPageSize());
-			//word_storage.printTopFiveFeq(page_storage.getId(key));  // printwriter [out] cannot use this fuction to output the result to txt
+			//word_storage.printTopFiveFeq(page_storage.getId(key));  // printwriter [out] cannot use this function to output the result to txt
 			word_storage.printTopFiveFeq2(page_storage.getId(key), out);
 			
 			Vector<String> temp = (Vector<String>) parent_ChildLink.getChild().getEntry(page_storage.getId(key));
-			out.println( "It has the following " + temp.size() + " child(s) :");
+			//out.println( "It has the following " + temp.size() + " child(s) :");
 			for(int i = 0; i < temp.size(); i++)		
 				out.println(temp.get(i));
 			out.println("-------------------------------------------------------------------------------------------");
 			
 		}
+		//page_storage.printall();
 		out.close();
 		System.out.println("Finished -> Please check the spider_result.txt");
-			
 			
 	}
 
