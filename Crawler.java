@@ -402,32 +402,17 @@ public class Crawler
 			word_storage.printall();
 			
 			
-			System.out.println("...................................................");
-			System.out.println("...................................................");
-			System.out.println("...................................................");
+			System.out.println("..................Wait.................................");
 			for(int i=0; i<30 ; i++){
 				System.out.println(page_storage.getId(links.get(i)));
 			}
-			System.out.println("...................................................");
-			System.out.println("...................................................");
-	
-			//for(int i=0; i<30 ; i++){
-				Crawler newCrawler = new Crawler("http://cssystem.cse.ust.hk/UGuides/csd_manage.html");
-				findParentAndChild.insertChild("http://cssystem.cse.ust.hk/UGuides/csd_manage.html", newCrawler.extractLinks(), page_storage);
-			//}
-			
+
 			//ranking.printParent();
-			System.out.println("...................................................");
-			System.out.println("...................................................");
-			System.out.println("...................................................");
-			PageRank.printChild();
-			
-			if(newCrawler.extractLinks()==null)
-				System.out.println(".........................1..........................");
-			else
-				System.out.println(newCrawler.extractLinks().get(0));
-			
-			System.out.println("Finished");
+			System.out.println(".......................................................");
+			System.out.println(".......................................................");
+			System.out.println(".......................................................");
+			//PageRank.printChild();
+			System.out.println("You should run spider.java first and then run test.java");
 			
 		}
 		catch (ParserException e)

@@ -126,8 +126,7 @@ public class Spider
 			}
 			//word_storage.printall();
 			page_storage.printall();
-			System.out.println("...................................................");
-			System.out.println("...................................................");
+			System.out.println("....................Wait...........................");
 			
 			for(int i = 0; i < ef.size(); i++){
 				crawler = new Crawler(ef.get(i));
@@ -137,7 +136,9 @@ public class Spider
 			
 			System.out.println("...................................................");
 			System.out.println("...................................................");
-			PageRank.printParent();
+			System.out.println("...................................................");
+			System.out.println("........Finised! Please Run the test.java..........");
+			//PageRank.printParent();
 			//ranking.printChild();
 //			Vector<String> words = crawler.extractWords();		
 //			
