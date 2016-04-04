@@ -1,6 +1,7 @@
 package groupCOMP4321;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -231,10 +232,6 @@ public class Word {
 		return pageSize;
 	}
 	
-	public HashStruc getInvertedBodyWord(){
-		return invertedBodyWord;
-	}
-	
 	public void finalize() throws IOException
 	{
 		recman.commit();
@@ -318,5 +315,22 @@ public class Word {
 		System.out.println();
 
 	}
+	
+	public void printTopFiveFeq2(String pageid, PrintWriter aa) throws IOException
+	{
+		Vector<InvertPosting> ip = null;
+		if(invertedBodyWord.getEntry(pageid) != null)
+			ip = (Vector<InvertPosting>)invertedBodyWord.getEntry(pageid);
+		else
+			return;
+		
+		for(InvertPosting iplist : ip)
+		{
+			aa.print(iplist.word_id + " " + iplist.freq + "; ");
+		}
+		aa.println();
+
+	}
+
 
 }

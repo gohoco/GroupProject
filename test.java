@@ -10,7 +10,7 @@ import jdbm.RecordManagerFactory;
 import jdbm.helper.FastIterator;
 
 public class test {
-
+	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
@@ -35,15 +35,7 @@ public class test {
 			out.println(pis.getURL());
 			out.println(pis.getLastModification() + ", " + pis.getPageSize());
 			//word_storage.printTopFiveFeq(page_storage.getId(key));  // printwriter [out] cannot use this fuction to output the result to txt
-			Vector<InvertPosting> ip = null;
-			if(word_storage.getInvertedBodyWord().getEntry(page_storage.getId(key)) != null){
-				ip = (Vector<InvertPosting>)word_storage.getInvertedBodyWord().getEntry(page_storage.getId(key));
-				
-				for(InvertPosting iplist : ip)
-					out.print(iplist.word_id + " " + iplist.freq + "; ");
-				
-				out.println();
-			}
+			word_storage.printTopFiveFeq2(page_storage.getId(key), out);
 			
 			Vector<String> temp = (Vector<String>) parent_ChildLink.getChild().getEntry(page_storage.getId(key));
 			out.println( "It has the following " + temp.size() + " child(s) :");
