@@ -132,8 +132,18 @@ public class Word {
 			
 		if(list != null)
 		{
-			list.add(new InvertPosting(word, tf));
-			invertedBodyWord.addEntry(page_id, list);
+			int check = 0;
+			InvertPosting newPost = new InvertPosting(word, tf);
+			for(InvertPosting p: list)
+			{
+				if(word.equals(p.word_id) && tf==p.freq)
+					check = 1;
+			}
+			if(check == 0)
+			{
+				list.add(newPost);
+				invertedBodyWord.addEntry(page_id, list);
+			}
 		}
 		else
 		{

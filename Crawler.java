@@ -248,6 +248,89 @@ public class Crawler
 		}
 	}
 	
+	public Vector<String> getTitleUniwords()
+	{
+		String title = getTitle();
+		String a = new String("No title");
+		String b = new String("Not found");
+		Vector<String> titlewords = new Vector<String>(0);
+		if(!title.equals(a) && !title.equals(b))
+		{
+			for(String s: title.split(" "))
+	        {
+				StopStem x = new StopStem("stopwords.txt");
+				String y = x.stem(s);
+				if(y==null || y=="" || x.isStopWord(y))
+					continue;
+	        	if(!titlewords.contains(y))
+	        		titlewords.addElement(y);
+	        }
+		}
+		return titlewords;
+	}
+	
+	public Vector<Integer> getTitleFreq()
+	{
+		String title = getTitle();
+		String a = new String("No title");
+		String b = new String("Not found");
+		Vector<String> titlewords = new Vector<String>(0);
+		Vector<Integer> titlefreq = new Vector<Integer>(0);
+		if(!title.equals(a) && !title.equals(b))
+		{
+			for(String s: title.split(" "))
+	        {
+				StopStem x = new StopStem("stopwords.txt");
+				String y = x.stem(s);
+				if(y==null || y=="" || x.isStopWord(y))
+					continue;
+				if(!titlewords.contains(y))
+				{
+					titlewords.addElement(y);
+					titlefreq.addElement(1);
+				}
+				else
+				{
+					int z = titlewords.indexOf(y);
+					titlefreq.setElementAt(titlefreq.get(z)+1, z);
+				}
+	        }
+		}
+		return titlefreq;
+	}
+	
+	public Vector<String> getTitlePosi()
+	{
+		String title = getTitle();
+		String a = new String("No title");
+		String b = new String("Not found");
+		Vector<String> titlewords = new Vector<String>(0);
+		Vector<String> titleposi = new Vector<String>(0);
+		if(!title.equals(a) && !title.equals(b))
+		{
+			int i = -1;
+			for(String s: title.split(" "))
+	        {
+				i++;
+				StopStem x = new StopStem("stopwords.txt");
+				String y = x.stem(s);
+				if(y==null || y=="" || x.isStopWord(y))
+					continue;
+				if(!titlewords.contains(y))
+				{
+					titlewords.addElement(y);
+					titleposi.addElement(Integer.toString(i));
+				}
+				else
+				{
+					int z = titlewords.indexOf(y);
+					titleposi.setElementAt(titleposi.get(z) + "," + Integer.toString(i), z);
+				}
+	        }
+		}
+		return titleposi;
+	}
+	
 	public long getLastModifiedDate()
 	{
 		try
@@ -384,6 +467,13 @@ public class Crawler
 			Vector<String> title = crawler.getTitle1();
 			for(int i = 0; i < title.size(); i++)		
 				System.out.print(title.get(i));
+
+			System.out.println("");
+			Vector<String> titleword = crawler.getTitleUniwords();
+			Vector<Integer> titlefreq = crawler.getTitleFreq();
+			Vector<String> titleposi = crawler.getTitlePosi();
+			for(int i = 0; i < titleword.size(); i++)
+				System.out.println(titleword.get(i) + " " + titlefreq.get(i) + " " + titleposi.get(i));
 			System.out.println("\n");
 			System.out.println(new Date(crawler.getLastModifiedDate()));
 			System.out.println(crawler.getSize());
