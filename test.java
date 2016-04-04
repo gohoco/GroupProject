@@ -43,7 +43,8 @@ public class test {
 			out.println("-------------------------------------------------------------------------------------------");
 			
 		}
-		//page_storage.printall();
+		word_storage.printall();
+		page_storage.printall();
 		out.close();
 		System.out.println("Finished -> Please check the spider_result.txt");
 			

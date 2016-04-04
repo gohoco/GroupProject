@@ -1,4 +1,4 @@
-package groupCOMP4321;
+
 
 import java.io.IOException;
 import java.util.Date;
@@ -10,7 +10,7 @@ import org.htmlparser.util.ParserException;
 
 import jdbm.RecordManager;
 import jdbm.helper.FastIterator;
-/**
+/*
  * 
  * 
  * This table stores (page_id -> pageInfoStruct)
@@ -29,16 +29,6 @@ public class Page {
 		pageId = new HashStruc(recman,"pageID");
 		pageCount = getSize();
 	}
-	
-//	/** Given PageInfoStruct object, insert into hashtable*/
-//	public void insertElement(String page_id, PageInfoStruct new_page, long page_size) throws IOException
-//	{
-//		new_page.setPageSize(page_size);				// set page_size if not set
-//		if( new_page.setPageId(page_id) )				// set page_id if not set
-//		{
-//			pageInfo.addEntry(page_id, new_page);		// add entry only if page_id is set successfully
-//		}
-//	}
 	
 	public long getLastModificationLong(String url) throws IOException
 	{

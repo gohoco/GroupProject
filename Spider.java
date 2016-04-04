@@ -86,21 +86,7 @@ public class Spider
 			Vector<String> cd = crawler.getClink();
 			Spider x = new Spider();
 			Vector<String> ef = x.spider(ab, cd, 30);
-//----------------------insert word + page for cse.ust.hk-------------
-//			System.out.println("Inserting for page "+ crawler.geturl());
-//			page_storage.insertPage(crawler.geturl());
-//			PageInfoStruct pagestruc = new PageInfoStruct(crawler.geturl(), crawler.getTitle(), crawler.getLastModifiedDate(), crawler.getSize());
-//			page_storage.insertPageInfo(page_storage.getId(crawler.geturl()), pagestruc);
-//			
-//			Vector<String> uni_word = crawler.getuniwords();
-//			Vector<Integer> freq_uni_word = crawler.getfreq();
-//			Vector<String> title_word = crawler.getTitle1();//no freq
-//			for(int i = 0; i < uni_word.size(); i++)
-//			{
-//				word_storage.insertWord(uni_word.get(i));
-//				word_storage.insertWordTF(word_storage.getWordID(uni_word.get(i)), page_storage.getId(crawler.geturl()), freq_uni_word.get(i), crawler.getPosi(i), true);
-//				word_storage.insertInvertedWord(page_storage.getId(crawler.geturl()), uni_word.get(i), freq_uni_word.get(i), true);
-//			}
+
 			PageInfoStruct pagestruc;
 			Vector<String> uni_word;
 			Vector<Integer> freq_uni_word;
@@ -139,36 +125,6 @@ public class Spider
 			System.out.println("...................................................");
 			System.out.println("...................................................");
 			System.out.println("........Finised! Please Run the test.java..........");
-			//PageRank.printParent();
-			//ranking.printChild();
-//			Vector<String> words = crawler.extractWords();		
-//			
-//			System.out.println("Words in "+crawler.geturl()+":");
-//			for(int i = 0; i < words.size(); i++)
-//				System.out.print(words.get(i)+" ");
-//			System.out.println("\n\n");
-//			
-//			System.out.println("Stem word and frequency");
-//			Vector<String> word1 = crawler.getuniwords();
-//			Vector<Integer> freq = crawler.getfreq();
-//			for(int i = 0; i < word1.size(); i++)
-//			{
-//				System.out.print(word1.get(i)+" ");
-//				System.out.print(freq.get(i)+" ");
-//			}
-//			System.out.println("\n\n");
-//
-//			/*
-//			Vector<String> links = crawler.extractLinks();
-//			System.out.println("Links in "+crawler.geturl()+":");
-//			for(int i = 0; i < links.size(); i++)		
-//				System.out.println(links.get(i));
-//			System.out.println("");
-//			*/
-//			
-//			System.out.println(crawler.getTitle());
-//			System.out.println(new Date(crawler.getLastModifiedDate()));
-//			System.out.println(crawler.getSize());
 			
 			recman.commit();
 			recman.close();

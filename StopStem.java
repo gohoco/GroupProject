@@ -27,14 +27,6 @@ public class StopStem
 		{
 			e.printStackTrace();
 		}
-		/*
-		stopWords.add("is");
-		stopWords.add("am");
-		stopWords.add("are");
-		stopWords.add("was");
-		stopWords.add("were");
-		*/
-
 		
 	}
 	public String stem(String str)

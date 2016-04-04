@@ -1,4 +1,4 @@
-package groupCOMP4321;
+
 
 import IRUtilities.*;
 import jdbm.RecordManager;
@@ -70,12 +70,10 @@ public class Crawler
 		sb.setURL (url);
 		Vector<String> v1 = new Vector<String>(0);
 		StringTokenizer a = new StringTokenizer(sb.getStrings());
-		//System.out.println(a.countTokens());
 		while (a.hasMoreTokens()) {
 			String b = a.nextToken();
 			v1.addElement(b);
 			length += b.length();
-			//System.out.println(b);
 	    }
 		words = v1;
 		
@@ -122,43 +120,11 @@ public class Crawler
 	
 	public Vector<String> extractWords() throws ParserException
 	{
-		/*
-		// extract words in url and return them
-		// use StringTokenizer to tokenize the result from StringBean
-		// ADD YOUR CODES HERE
-		StringBean sb = new StringBean ();
-		sb.setLinks (false);
-		sb.setURL (url);
-		Vector<String> v = new Vector<String>(0);
-		StringTokenizer a = new StringTokenizer(sb.getStrings());
-		System.out.println(a.countTokens());
-		while (a.hasMoreTokens()) {
-			String b = a.nextToken();
-			v.addElement(b);
-			length += b.length();
-			//System.out.println(b);
-	    }
-		//v.addElement(sb.getStrings());
-		//System.out.println(sb.getStrings());
-		 
-		 */
 		return words;
 		
 	}
 	public Vector<String> extractLinks() throws ParserException
 	{
-		/*
-		// extract links in url and return them
-		// ADD YOUR CODES HERE
-		LinkBean lb = new LinkBean();
-	    lb.setURL(url);
-	    URL[] abc = lb.getLinks();
-		Vector<String> v = new Vector<String>();
-		for(int i=0; i<abc.length; i++){
-			String a = abc[i].toString();
-			v.addElement(a);
-	    }
-	    */
 		
 		return childLink;
 	}
@@ -442,13 +408,7 @@ public class Crawler
 			
 			Vector<String> word1 = crawler.getuniwords();
 			Vector<Integer> freq = crawler.getfreq();
-			/*Vector<Integer> posi = crawler.getPosi(1);
-			for(int i = 0; i < posi.size(); i++)
-			{
-				System.out.print(posi.get(i)+" ");
-			}
-			System.out.println("\n");
-			*/
+
 			for(int i = 0; i < word1.size(); i++)
 			{
 				System.out.print(word1.get(i)+" ");
@@ -482,7 +442,6 @@ public class Crawler
 				System.out.println(word1.get(pop.get(i)) + " " + freq.get(pop.get(i)) + " "+ pop.get(i));
 			System.out.println("");
 			
-			//-----------
 			
 			for(int i = 0; i < word1.size(); i++)
 			{
@@ -497,11 +456,11 @@ public class Crawler
 				System.out.println(page_storage.getId(links.get(i)));
 			}
 
-			//ranking.printParent();
+
 			System.out.println(".......................................................");
 			System.out.println(".......................................................");
 			System.out.println(".......................................................");
-			//PageRank.printChild();
+
 			System.out.println("You should run spider.java first and then run test.java");
 			
 		}
