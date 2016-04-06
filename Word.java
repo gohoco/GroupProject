@@ -167,10 +167,10 @@ public class Word {
 	
 	public void printall() throws IOException
 	{
-		FastIterator fi = wordID.getIterator();
+		FastIterator fi = word.getIterator();
 		String key;
 		while((key = (String)fi.next()) != null){
-			System.out.println(key + " = " + wordID.getEntry(key));
+			System.out.println(key + " = " + word.getEntry(key));
 		}
 	}
 	

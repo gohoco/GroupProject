@@ -19,7 +19,7 @@ public class test {
 		File file = new File("spider_result.txt");
 		PrintWriter out = new PrintWriter(file);
 		
-		FastIterator fi = page_storage.getIterator();
+		FastIterator fi = page_storage.getIteratorForPageID();
 		String key;
 		PageInfoStruct pis;
 		System.out.println("Start printing...");
@@ -27,23 +27,25 @@ public class test {
 		while((key = (String)fi.next()) != null)
 		{
 			//out.print("Page[" + counter++ + "] ");
-			pis = page_storage.getPage(page_storage.getId(key));
+			pis = page_storage.getPage(key);
 			if(pis==null)
 				out.println("pis is null  " + key);
 			out.println(pis.getTitle());
 			out.println(pis.getURL());
 			out.println(pis.getLastModification() + ", " + pis.getPageSize());
 			//word_storage.printTopFiveFeq(page_storage.getId(key));  // printwriter [out] cannot use this function to output the result to txt
-			word_storage.printTopFiveFeq2(page_storage.getId(key), out);
+			word_storage.printTopFiveFeq2(key, out);
 			
-			Vector<String> temp = (Vector<String>) parent_ChildLink.getChild().getEntry(page_storage.getId(key));
+			Vector<String> temp = (Vector<String>) parent_ChildLink.getChild().getEntry(key);
 			//out.println( "It has the following " + temp.size() + " child(s) :");
 			for(int i = 0; i < temp.size(); i++)		
 				out.println(temp.get(i));
 			out.println("-------------------------------------------------------------------------------------------");
 			
 		}
+		System.out.println("Word list and its ID:");
 		word_storage.printall();
+		System.out.println("Page list and its ID:");
 		page_storage.printall();
 		out.close();
 		System.out.println("Finished -> Please check the spider_result.txt");

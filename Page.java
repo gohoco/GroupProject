@@ -20,13 +20,15 @@ public class Page {
 	private RecordManager recman;
 	private HashStruc pageInfo;//(pageID, PageInfoStruct)
 	private HashStruc pageId;//(page,pageID)
+	private HashStruc page;//(pageID,page)
 	private int pageCount;
 	
 	public Page(RecordManager _recman) throws IOException
 	{		
 		recman = _recman;
-		pageInfo = new HashStruc(recman,"pageInfo");
-		pageId = new HashStruc(recman,"pageID");
+		pageInfo = new HashStruc(recman,"pageInfo");//(pageID, PageInfoStruct)
+		pageId = new HashStruc(recman,"pageID");//(page,pageID)
+		page = new HashStruc(recman, "page");//(pageID,page)
 		pageCount = getSize();
 	}
 	
@@ -60,6 +62,7 @@ public class Page {
 		if(pageId.getEntry(url) == null){
 			id = String.format("%08d", pageCount++);
 			pageId.addEntry(url, id);
+			page.addEntry(id, url);
 		}
 	}
 	
@@ -73,16 +76,22 @@ public class Page {
 		return pageId.getIterator();
 	}
 	
+	public FastIterator getIteratorForPageID() throws IOException
+	{
+		//return the keys
+		return page.getIterator();
+	}
+	
 	public PageInfoStruct getPage(String id) throws IOException{
 		return (PageInfoStruct)pageInfo.getEntry(id);
 	}
 	
 	public void printall() throws IOException
 	{
-		FastIterator fi = pageId.getIterator();
+		FastIterator fi = page.getIterator();
 		String key;
 		while((key = (String)fi.next()) != null){
-			System.out.println(key + " = " + pageId.getEntry(key));
+			System.out.println(key + " = " + page.getEntry(key));
 		}
 	}
 }
