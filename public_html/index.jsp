@@ -8,28 +8,34 @@
 
     
 <%
-   if(request.getParameter("txtname") != null)
+   if(request.getParameter("txtname") != null && request.getParameter("txtname") != "")
    {
-out.println("not null");
-   
-String file = application.getRealPath("/") + "stopwords.txt";
-//SearchEngine se = new SearchEngine(file);
-//se.search("egrnuoewrhgoer");
-   
-   
-StopStem ss = new StopStem(file);
-String temp = "ally";
-temp = ss.stem("eating");
-out.println("temp :"+temp);
-out.println(ss.isStopWord("about"));
-out.println(file);
-File myFile = new File(file);
-out.println(myFile.exists());
+        out.println("The results are:<hr/>");
+        String input = request.getParameter("txtname");
+        String stopwordtxt = application.getRealPath("/") + "stopwords.txt";
+        SearchEngine se = new SearchEngine(stopwordtxt);
+        Vector<String> result_id = new Vector<String>();
+        result_id = se.search(input);
+        if(result_id.size() > 0)
+        {
+for(int i=0; i<result_id.size(); i++){
+                                 
+                                 
+                                 
+                                 
+}
+
+        }
+        else
+        {
+            out.println("No match result");    
+        }
+    
         
    }
    else
    {
-        out.println("null");
+        out.println("Invalid input!");
    }
 %>
     
