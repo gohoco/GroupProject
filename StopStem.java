@@ -1,10 +1,11 @@
 import IRUtilities.*;
 import java.io.*;
+import java.util.HashSet;
 
 public class StopStem
 {
 	private Porter porter;
-	private java.util.HashSet stopWords;
+	private HashSet<String> stopWords;
 	public boolean isStopWord(String str)
 	{
 		return stopWords.contains(str);	
@@ -13,7 +14,7 @@ public class StopStem
 	{
 		super();
 		porter = new Porter();
-		stopWords = new java.util.HashSet();
+		stopWords = new HashSet<String>();
 		String abc;
 		try{
 			File myFile = new File("src/stopwords.txt");
