@@ -164,4 +164,38 @@ public class PageRank {
 			count++;
 		}
 	}
+	
+	//It is Url not UrlID
+	public void deleteChildParent(String Url, Page myPage) throws IOException{
+		String tempURLID = myPage.getId(Url);
+		
+		Vector<String> myChild = (Vector<String>)child.getEntry(tempURLID);
+		//Deleting the parent hashstruct which contains the target as the parent
+		for(int i = 0; i < myChild.size(); i++){	
+			String temp = myChild.get(i);
+			String tempID = myPage.getId(temp);
+			
+			Vector<String> tempParent = (Vector<String>)parent.getEntry(tempID);
+			tempParent.removeElement(Url);
+			parent.delEntry(tempID);
+			parent.addEntry(tempID, tempParent);
+			
+		}
+		
+		//Deleting the child hashstruct which contains the target as the child
+		Vector<String> myParent = (Vector<String>)parent.getEntry(tempURLID);
+		//Deleting the parent hashstruct which contains the target as the parent
+		for(int i = 0; i < myParent.size(); i++){	
+			String temp = myParent.get(i);
+			String tempID = myPage.getId(temp);
+			
+			Vector<String> tempChild = (Vector<String>)child.getEntry(tempID);
+			tempChild.removeElement(Url);
+			child.delEntry(tempID);
+			child.addEntry(tempID, tempChild);
+		}
+		
+		parent.delEntry(tempURLID);
+		child.delEntry(tempURLID);
+	}
 }
