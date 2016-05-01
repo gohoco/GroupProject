@@ -1,3 +1,4 @@
+package groupCOMP4321;
 
 import java.io.IOException;
 import java.util.Vector;
@@ -40,14 +41,23 @@ public class test {
 			//out.println( "It has the following " + temp.size() + " child(s) :");
 			for(int i = 0; i < temp.size(); i++)		
 				out.println(temp.get(i));
+			out.println("-------------------------------------------------------------------------------------------");	
+			out.println("-------------------------My Parent---------------------------------------------------------");
+			Vector<String> temp2 = (Vector<String>) parent_ChildLink.getParent().getEntry(key);
+			//out.println( "It has the following " + temp.size() + " child(s) :");
+			for(int i = 0; i < temp2.size(); i++)		
+				out.println(temp2.get(i));
 			out.println("-------------------------------------------------------------------------------------------");
-			
 		}
 		System.out.println("Word list and its ID:");
 		word_storage.printall();
 		System.out.println("Page list and its ID:");
 		page_storage.printall();
 		out.close();
+		
+		parent_ChildLink.calculateScore(page_storage);
+		parent_ChildLink.printScore();
+		
 		System.out.println("Finished -> Please check the spider_result.txt");
 			
 	}

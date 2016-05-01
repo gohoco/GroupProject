@@ -1,3 +1,4 @@
+package groupCOMP4321;
 
 import IRUtilities.*;
 import jdbm.RecordManager;
@@ -81,11 +82,11 @@ public class Spider
 		{
 			Vector<String> ab = new Vector<String>(0);
 			
-			Crawler crawler = new Crawler("http://www.cse.ust.hk");
+			Crawler crawler = new Crawler("http://www.cse.ust.hk/~ericzhao/COMP4321/TestPages/testpage.htm");
 			ab.addElement(crawler.geturl());
 			Vector<String> cd = crawler.getClink();
 			Spider x = new Spider();
-			Vector<String> ef = x.spider(ab, cd, 30);
+			Vector<String> ef = x.spider(ab, cd, 300);
 
 			PageInfoStruct pagestruc;
 			Vector<String> uni_word;
@@ -113,12 +114,23 @@ public class Spider
 			}
 			//word_storage.printall();
 			page_storage.printall();
-			System.out.println("....................inserting their childs...........................");
+			System.out.println("....................inserting their childs and parents.....................");
 			
+			
+	
 			for(int i = 0; i < ef.size(); i++){
 				crawler = new Crawler(ef.get(i));
-				findParentAndChild.insertChild(ef.get(i), crawler.extractLinks(), page_storage);
+				String myID = page_storage.getId(ef.get(i));
+				findParentAndChild.insertChild(ef.get(i), crawler.extractLinks(), myID);
 				
+				//Insert Parent
+				Vector<String> insertParent = (Vector<String>)crawler.extractLinks();
+				for(int j=0; j<insertParent.size() ; j++){
+					String url = insertParent.get(j);
+					String urlID = page_storage.getId(url);
+					if(urlID != null)
+						findParentAndChild.insertParent(urlID, ef.get(i));
+				}
 			}
 			
 			System.out.println("...................................................");
