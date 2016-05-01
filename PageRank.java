@@ -54,8 +54,8 @@ public class PageRank {
 		return child;
 	}
 	
-	public HashStruc getScore(){
-		return pageRankScore;
+	public double getScore(String UrlID) throws IOException{
+		return (double)pageRankScore.getEntry(UrlID);
 	}
 	
 	public static void printParent() throws IOException
