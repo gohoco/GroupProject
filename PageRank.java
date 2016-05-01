@@ -46,12 +46,12 @@ public class PageRank {
 		
 	}
 	
-	public HashStruc getParent(){
-		return parent;
+	public Vector<String> getParent(String UrlID) throws IOException{
+		return (Vector<String>) parent.getEntry(UrlID);
 	}
 	
-	public HashStruc getChild(){
-		return child;
+	public Vector<String> getChild(String UrlID) throws IOException{
+		return (Vector<String>) child.getEntry(UrlID);
 	}
 	
 	public double getScore(String UrlID) throws IOException{
