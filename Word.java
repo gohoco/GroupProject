@@ -311,6 +311,24 @@ public class Word {
 		aa.println();
 
 	}
+	
+	public Vector<InvertPosting> getIBodyWord (String ID) throws IOException
+	{
+
+		if(invertedBodyWord.getEntry(ID) == null)
+			return null;
+		
+		return  (Vector<InvertPosting>) invertedBodyWord.getEntry(ID);
+	}
+	
+	public Vector<Posting> getBodyWord (String ID) throws IOException
+	{
+
+		if(ID == null || bodyWord.getEntry(ID) == null)
+			return null;
+		
+		return  (Vector<Posting>) bodyWord.getEntry(ID);
+	}
 
 
 }
