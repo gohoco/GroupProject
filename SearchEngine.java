@@ -8,12 +8,50 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import jdbm.RecordManager;
+import jdbm.RecordManagerFactory;
+
 public class SearchEngine {
 
+	private String stopwordtxt;
+	private RecordManager recman;
+	private Page page_storage;
+	private PageRank pagerank;
+	private Word word_storage;
+	private Scores pageScore;
+	
+	public SearchEngine(String stopwordpath) throws IOException{
+		stopwordtxt = stopwordpath;
+		recman = RecordManagerFactory.createRecordManager("searchEngine");
+		page_storage = new Page(recman);
+		pagerank = new PageRank(recman);
+		word_storage = new Word(recman);
+	}
+	
+	public PageInfoStruct getPageInfoStruct(String id) throws IOException{
+		PageInfoStruct pis = page_storage.getPage(id);
+		return pis;
+	}
+	
+	public Vector<InvertPosting> getTopFiveFeqInvertPosting(String id) throws IOException{
+		Vector<InvertPosting> ip = word_storage.getTopFiveFeq(id);
+		return ip;
+	}
+	
+	public Vector<String> getParentLink(String id) throws IOException{
+		Vector<String> pl = pagerank.getParent(id);
+		return pl;
+	}
+	
+	public Vector<String> getChildLink(String id) throws IOException{
+		Vector<String> cl = pagerank.getChild(id);
+		return cl;
+	}
+	
 	public Vector<String> search(String input){
 		
 		Vector<String> query = new Vector<String>();
-		StopStem ss = new StopStem("");
+		StopStem ss = new StopStem(stopwordtxt);
 		
 		//-----extract phrase----------------
 		Vector<String> phrase = new Vector<String>();
@@ -87,30 +125,48 @@ public class SearchEngine {
 		
 //		System.out.println(singleWord.size());
 		//---------------combine result---------------
-		for(String phrase_word: phrase)
-			query.add(phrase_word);
-		for(String single_word: singleWord)
-			query.add(single_word);
+//		for(String phrase_word: phrase)
+//			query.add(phrase_word);
+//		for(String single_word: singleWord)
+//			query.add(single_word);
+//		
+//		for(String q: query)
+//			System.out.println(q);
 		
-		for(String q: query)
-			System.out.println(q);
+		pageScore = new Scores(singleWord, phrase);
+		Vector<String> result = pageScore.gettop50();
 		
-		
-		
-		
-		return new Vector<String>();
+		return result;
 	}
 	
-//	public String checkPhrase(String input){
-//		
-//		for(int i=0; i < input.length(); i++)
-//		{
-//			
-//		}
-//	}
 	
-	public static void main (String[] args){
-		SearchEngine se = new SearchEngine();
-		se.search("eating bb \"the Hong Kong\" cb \"Hong Kong3 eating\" db e");
+	public static void main (String[] args) throws IOException{
+		SearchEngine se = new SearchEngine("stopwords.txt");
+		Vector<String> result = se.search("\"Hong Kong\"");
+		for(String r:result)
+		{
+			PageInfoStruct pis = se.getPageInfoStruct(r);
+			System.out.println(pis.getTitle());
+			System.out.println(pis.getURL());
+			System.out.print(pis.getLastModification() + ", ");
+			System.out.println(pis.getPageSize());
+			
+			Vector<InvertPosting> ip = se.getTopFiveFeqInvertPosting(r);
+			for(InvertPosting in:ip)
+			{
+				System.out.print(in.word_id +" "+in.freq+";");
+			}
+			System.out.println();
+			System.out.println("<--------P L---------->");
+			Vector<String> pl = se.getParentLink(r);
+			for(String p:pl)
+				System.out.println(p);
+			System.out.println("<--------C L---------->");			
+			Vector<String> cl = se.getChildLink(r);
+			for(String c:cl)
+				System.out.println(c);
+			
+		}
+		
 	}
 }
