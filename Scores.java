@@ -25,6 +25,32 @@ public class Scores {
 	public Vector<Integer> maxtf;
 	public Vector<Double> sqrtdoclength;
 	
+
+	public double getScore(String id)
+	{
+		Vector<String> a = gettop50();
+		Vector<Double> b = (Vector<Double>) scores.clone();
+		try{
+			if(!a.contains(id))
+				return 0;
+			else
+			{
+				RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
+				PageRank x = new PageRank(recman);
+				Page page = new Page(recman);
+				x.calculateScore(page);
+				double c = x.getScore(id);
+				int d = keyID.indexOf(id);
+				c *= scores.get(d);
+				return c;
+			}
+		}
+		catch (Exception e){
+			//System.out.println("some error");
+			return 0;
+		}
+	}
+	
 	public Vector<String> gettop50()
 	{
 		Vector<String> a = get50();
@@ -56,7 +82,7 @@ public class Scores {
 			return c;
 		}
 		catch (Exception e){
-			System.out.println("some error");
+			//System.out.println("some error");
 			return a;
 		}
 	}
@@ -367,6 +393,7 @@ public class Scores {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public static void main(String[] args) throws IOException {
 		Vector<String> a = new Vector<String>(0);
