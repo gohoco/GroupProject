@@ -24,11 +24,44 @@ public class Scores {
 	public Vector<String> urls;
 	public Vector<Integer> maxtf;
 	public Vector<Double> sqrtdoclength;
-	//public Vector<String> trial;
-	
-	
 	
 	public Vector<String> gettop50()
+	{
+		Vector<String> a = get50();
+		Vector<Double> b = get50score();
+		try{
+			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
+			PageRank x = new PageRank(recman);
+			Page page = new Page(recman);
+			x.calculateScore(page);
+			Vector<String> c = new Vector<String>(0);
+			for(int i = 0; i<a.size(); i++)
+			{
+				double d = x.getScore(a.get(i));
+				double e = d*b.get(i);
+				b.setElementAt(e, i);
+			}
+			Double[] abc = new Double[a.size()];
+			b.toArray(abc);
+			Arrays.sort(abc);
+			int k = a.size();
+			for(int i = 0; i<a.size(); i++)
+			{
+				double p = abc[k-1-i];
+				int z = b.indexOf(p);
+				c.add(a.get(z));
+				b.setElementAt(-1.0, z);
+			}
+			
+			return c;
+		}
+		catch (Exception e){
+			System.out.println("some error");
+			return a;
+		}
+	}
+	
+	public Vector<String> get50()
 	{
 		Double[] abc = new Double[scores.size()];
 		scores.toArray(abc);
@@ -46,6 +79,26 @@ public class Scores {
 			int z = b.indexOf(y);
 			a.add(keyID.get(z));
 			b.setElementAt(-1.0, z);
+		}
+		return a;
+	}
+	
+	public Vector<Double> get50score()
+	{
+		Double[] abc = new Double[scores.size()];
+		scores.toArray(abc);
+		Arrays.sort(abc);
+		Vector<Double> a = new Vector<Double>(0);
+		Vector<Double> b = (Vector<Double>) scores.clone();
+		int x = scores.size();
+		for(int i = 0; i < 50; i++)
+		{
+			if((x-i-1)<0)
+				break;
+			double y = abc[x-1-i];
+			if(y == 0)
+				break;
+			a.add(y);
 		}
 		return a;
 	}
@@ -308,26 +361,7 @@ public class Scores {
 				
 				
 			}
-			//Vector<Posting> abc = word_storage.getBodyWord(word_storage.getWordID("cvil"));
-			//if(abc != null)
-			//	System.out.println(abc.size());
-			//System.out.println(pdf("kong abcde"));
-			/*
-			for(int i = 0; i< sqrtdoclength.size(); i++)
-			{
-				System.out.println(i +" "+  maxtf.get(i) + "  " + sqrtdoclength.get(i));
-			}
-			*/
-			/*
-			for(int i = 0; i< scores.size(); i++)
-				System.out.println(scores.get(i));
 			
-			//page_storage.printall();
-			System.out.println(word_storage.getWordID("abcde"));
-			if(word_storage.getWordID("abcde") == null)
-				System.out.println("abc");
-			System.out.println(a.size() + " " + b.size());
-			*/
 		}
 		catch (Exception e){
 			e.printStackTrace();
@@ -337,20 +371,37 @@ public class Scores {
 	public static void main(String[] args) throws IOException {
 		Vector<String> a = new Vector<String>(0);
 		Vector<String> b = new Vector<String>(0);
-		a.add("0");
+		a.add("hkust");
 		//a.add("1");
 		//a.add("abcde");
 		//b.add("0 1");
 		//b.add("1");
 		Scores x = new Scores(a, b);
 		//System.out.println(Math.pow(3, 2));
-		Vector<String> y = x.gettop50();
-		System.out.println(y.size());
-		//for(int i = 0; i< y.size(); i++)
-			//System.out.println(y.get(i));
+		Vector<String> y = x.get50();
+		//System.out.println(y.size());
+		for(int i = 0; i< y.size(); i++)
+			System.out.println(y.get(i));
+		System.out.println();
+		Vector<String> z = x.gettop50();
+		for(int i = 0; i< z.size(); i++)
+			System.out.println(z.get(i));
+		System.out.println();
+		try{
+			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
+			PageRank ab = new PageRank(recman);
+			Page page = new Page(recman);
+			ab.calculateScore(page);
+			Vector<String> c = new Vector<String>(0);
+			for(int i = 0; i<x.keyID.size(); i++)
+			{
+				System.out.println(ab.getScore(x.keyID.get(i)));
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
 		
-		//System.out.println(Math.log(8)/Math.log(0));
-		//System.out.println(0/0);
 	}
 
 }

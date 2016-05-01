@@ -1,4 +1,4 @@
-package groupCOMP4321;
+
 
 import java.util.*;
 import java.io.*;
@@ -63,7 +63,7 @@ public class PageRank {
 	}
 	
 	public double getScore(String UrlID) throws IOException{
-		return (double)pageRankScore.getEntry(UrlID);
+		return (Double)pageRankScore.getEntry(UrlID);
 	}
 	
 	public static void printParent() throws IOException
@@ -134,7 +134,7 @@ public class PageRank {
 							linkOfParent++;
 						}
 						//Get PR(T)
-						double parentScore = (double)temp.getEntry(urlID);
+						double parentScore = (Double)temp.getEntry(urlID);
 						
 						partialScore = partialScore + (parentScore / linkOfParent);
 					}
@@ -151,7 +151,7 @@ public class PageRank {
 			
 			while((key2 = (String)fi2.next()) != null){
 				temp.delEntry(key2);
-				double score2 = (double)pageRankScore.getEntry(key2);
+				double score2 = (Double)pageRankScore.getEntry(key2);
 				temp.addEntry(key2, score2);
 			}
 			
@@ -166,7 +166,7 @@ public class PageRank {
 		String key;
 		while((key = (String)fi.next()) != null){
 			System.out.print("[ " + count + " ]   " + key + " has the score : ");
-			double temp = (double) pageRankScore.getEntry(key);
+			double temp = (Double) pageRankScore.getEntry(key);
 			System.out.println(temp);
 			
 			count++;
