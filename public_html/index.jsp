@@ -75,7 +75,7 @@
                 }
                     //out.println("<a href=\"index.jsp?txtname="+ck[i].getValue()+"\">" + ck[i].getValue() + "</a>" +" | ");       
             }
-            String[] cs_array = cookie_string.split(" ");
+            String[] cs_array = cookie_string.split("__");
             for(int i = 0; i<cs_array.length;i++)
                 hs.add(cs_array[i]);
             for(String s:hs)
@@ -83,7 +83,7 @@
 
             out.println("<br/><hr/>");                            
         }
-        Cookie newck = new Cookie("m_history",input+" "+cookie_string);
+        Cookie newck = new Cookie("m_history",input+"__"+cookie_string);
         newck.setMaxAge(60*60);
         response.addCookie(newck);                               
                                        
