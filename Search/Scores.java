@@ -37,7 +37,7 @@ public class Scores {
 				return 0;
 			else
 			{
-				RecordManager recman = RecordManagerFactory.createRecordManager("/opt/tomcat/webapps/intrasearch/searchEngine");
+				RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
 				PageRank x = new PageRank(recman);
 				Page page = new Page(recman);
 				x.calculateScore(page);
@@ -58,7 +58,7 @@ public class Scores {
 		Vector<String> a = get50();
 		Vector<Double> b = get50score();
 		try{
-			RecordManager recman = RecordManagerFactory.createRecordManager("/opt/tomcat/webapps/intrasearch/searchEngine");
+			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
 			PageRank x = new PageRank(recman);
 			Page page = new Page(recman);
 			x.calculateScore(page);
@@ -134,7 +134,7 @@ public class Scores {
 	public int pdf(String x)
 	{
 		try{
-			RecordManager recman = RecordManagerFactory.createRecordManager("/opt/tomcat/webapps/intrasearch/searchEngine");
+			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
 			Page page_storage = new Page(recman);
 			Word word_storage = new Word(recman);
 			FastIterator fi = page_storage.getIteratorForPageID();
@@ -207,7 +207,7 @@ public class Scores {
 		//trial = new Vector<String>(0);
 		
 		try{
-			RecordManager recman = RecordManagerFactory.createRecordManager("/opt/tomcat/webapps/intrasearch/searchEngine");
+			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
 			Page page_storage = new Page(recman);
 			Word word_storage = new Word(recman);
 			FastIterator fi = page_storage.getIteratorForPageID();
@@ -417,7 +417,7 @@ public class Scores {
 			System.out.println(z.get(i));
 		System.out.println();
 		try{
-			RecordManager recman = RecordManagerFactory.createRecordManager("/opt/tomcat/webapps/intrasearch/searchEngine");
+			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
 			PageRank ab = new PageRank(recman);
 			Page page = new Page(recman);
 			ab.calculateScore(page);

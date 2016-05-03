@@ -23,7 +23,7 @@ public class SearchEngine {
 	
 	public SearchEngine(String stopwordpath) throws IOException{
 		stopwordtxt = stopwordpath;
-		recman = RecordManagerFactory.createRecordManager("/opt/tomcat/webapps/intrasearch/searchEngine");
+		recman = RecordManagerFactory.createRecordManager("searchEngine");
 		//		recman = RecordManagerFactory.createRecordManager("/opt/tomcat/webapps/intrasearch/searchEngine");
 		page_storage = new Page(recman);
 		pagerank = new PageRank(recman);

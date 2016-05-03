@@ -74,7 +74,7 @@ public class Spider
 	
 	public static void main (String[] args) throws IOException
 	{
-		RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
+		RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine2");
 		Word word_storage = new Word(recman);
 		Page page_storage = new Page(recman);
 		PageRank findParentAndChild = new PageRank(recman);
