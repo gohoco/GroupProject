@@ -29,66 +29,39 @@ public class Scores {
 	public double getScore(String id)
 	{
 		Vector<String> a = gettop50();
-		Vector<Double> b = (Vector<Double>) scores.clone();
-		try{
-			if(!a.contains(id))
-				return 0;
-			else
-			{
-				RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
-				PageRank x = new PageRank(recman);
-				Page page = new Page(recman);
-				x.calculateScore(page);
-				double c = x.getScore(id);
-				int d = keyID.indexOf(id);
-				c *= scores.get(d);
-				
-				//recman.commit();
-				recman.close();
-				return c;
-			}
-		}
-		catch (Exception e){
+		if(!a.contains(id))
 			return 0;
+		else
+		{
+			int b = keyID.indexOf(id);
+			return newscores.get(b);
 		}
 	}
 	
 	public Vector<String> gettop50()
 	{
-		Vector<String> a = get50();
-		Vector<Double> b = (Vector<Double>)get50score().clone();
-		try{
-			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
-			PageRank x = new PageRank(recman);
-			Page page = new Page(recman);
-			x.calculateScore(page);
-			Vector<String> c = new Vector<String>(0);
-			for(int i = 0; i<a.size(); i++)
-			{
-				double d = x.getScore(a.get(i));
-				double e = d*b.get(i);
-				b.setElementAt(e, i);
-			}
-			Double[] abc = new Double[a.size()];
-			b.toArray(abc);
-			Arrays.sort(abc);
-			int k = a.size();
-			for(int i = 0; i<a.size(); i++)
-			{
-				double p = abc[k-1-i];
-				int z = b.indexOf(p);
-				c.add(a.get(z));
-				b.setElementAt(-1.0, z);
-			}
-			
-			//recman.commit();
-			recman.close();
-			return c;
+		Vector<String> a = (Vector<String>)get50().clone();
+		Double[] abc = new Double[a.size()];
+		Vector<String> b = new Vector<String>(0);
+		Vector<Double> c = new Vector<Double>(0);
+		
+		for(int i = 0; i<a.size(); i++)
+		{
+			int x = keyID.indexOf(a.get(i));
+			c.add(newscores.get(x));
 		}
-		catch (Exception e){
-			//System.out.println("some error");
-			return a;
+		c.toArray(abc);
+		Arrays.sort(abc);
+		int y = a.size();
+		for(int i = 0; i<a.size(); i++)
+		{
+			double e = abc[y-1-i];
+			int z = c.indexOf(e);
+			b.add(a.get(i));
+			c.setElementAt(-1.0, z);
 		}
+		
+		return b;
 	}
 	
 	public Vector<String> get50()
@@ -206,7 +179,7 @@ public class Scores {
 		scores = new Vector<Double>(0);
 		urls = new Vector<String>(0);
 		keyID = new Vector<String>(0);
-		
+		newscores = new Vector<Double>(0);
 		
 		try{
 			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
@@ -363,7 +336,11 @@ public class Scores {
 				scores.add(okscore);
 				
 				
+				PageRank pagerank = new PageRank(recman);
+				double finscore = okscore * pagerank.getScore(key);
+				newscores.add(finscore);
 			}
+			
 			
 			recman.commit();
 			recman.close();

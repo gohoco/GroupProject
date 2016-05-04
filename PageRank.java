@@ -206,4 +206,18 @@ public class PageRank {
 		parent.delEntry(tempURLID);
 		child.delEntry(tempURLID);
 	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		try{
+			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
+			Page page_storage = new Page(recman);
+			PageRank pagerank = new PageRank(recman);
+			pagerank.calculateScore(page_storage);
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 }
