@@ -1,4 +1,3 @@
-package groupCOMP4321;
 
 import java.io.IOException;
 import java.util.Vector;
