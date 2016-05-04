@@ -1,4 +1,4 @@
-package groupCOMP4321;
+package Search;
 
 
 import IRUtilities.*;
@@ -118,8 +118,8 @@ public class Spider
 //				for(int j = 0; j < title_word.size(); j++)
 //				{
 //					System.out.println("url: "+ crawler.geturl());
-//					System.out.println("word: "+title_word.get(j)+" freq: "+1);
-//					word_storage.insertInvertedWord(page_storage.getId(crawler.geturl()), title_word.get(j), 1, false);
+//					System.out.println("word: "+title_word.get(j)+" freq: "+freq_title_word.get(j));
+//					word_storage.insertInvertedWord(page_storage.getId(crawler.geturl()), title_word.get(j), freq_title_word.get(j), false);
 //				}
 				
 			}
