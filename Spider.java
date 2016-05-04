@@ -119,6 +119,7 @@ public class Spider
 //				{
 //					System.out.println("url: "+ crawler.geturl());
 //					System.out.println("word: "+title_word.get(j)+" freq: "+freq_title_word.get(j));
+//					word_storage.insertWordTF(word_storage.getWordID(title_word.get(j)), page_storage.getId(crawler.geturl()), freq_title_word.get(j), crawler.getTitlePosi(j), false);
 //					word_storage.insertInvertedWord(page_storage.getId(crawler.geturl()), title_word.get(j), freq_title_word.get(j), false);
 //				}
 				
