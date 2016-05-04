@@ -1,5 +1,6 @@
 package groupCOMP4321;
 
+
 import IRUtilities.*;
 import jdbm.RecordManager;
 import jdbm.RecordManagerFactory;
@@ -92,6 +93,7 @@ public class Spider
 			Vector<String> uni_word;
 			Vector<Integer> freq_uni_word;
 			Vector<String> title_word;//no freq
+			Vector<Integer> freq_title_word;
 //-------------------------------insert word + page--------------	
 			for(int i = 0; i < ef.size(); i++)
 			{
@@ -104,6 +106,8 @@ public class Spider
 				uni_word = crawler.getuniwords();
 				freq_uni_word = crawler.getfreq();
 				title_word = crawler.getTitle1();//no freq for title is provided
+				freq_title_word = crawler.getTitleFreq();
+				
 				for(int j = 0; j < uni_word.size(); j++)
 				{
 					word_storage.insertWord(uni_word.get(j));
@@ -111,8 +115,16 @@ public class Spider
 					word_storage.insertInvertedWord(page_storage.getId(crawler.geturl()), uni_word.get(j), freq_uni_word.get(j), true);
 				}
 				
+//				for(int j = 0; j < title_word.size(); j++)
+//				{
+//					System.out.println("url: "+ crawler.geturl());
+//					System.out.println("word: "+title_word.get(j)+" freq: "+1);
+//					word_storage.insertInvertedWord(page_storage.getId(crawler.geturl()), title_word.get(j), 1, false);
+//				}
+				
 			}
 			//word_storage.printall();
+			recman.commit();
 			page_storage.printall();
 			System.out.println("....................inserting their childs and parents.....................");
 			
