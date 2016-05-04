@@ -1,6 +1,5 @@
 package Search;
 
-
 import java.io.IOException;
 import java.util.Vector;
 import java.io.PrintWriter;

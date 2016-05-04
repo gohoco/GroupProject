@@ -1,6 +1,7 @@
 package Search;
 
 
+
 import java.util.*;
 import java.io.*;
 import jdbm.*;
@@ -98,7 +99,7 @@ public class PageRank {
 		}
 	}
 	
-	public static void calculateScore(Page myPage) throws IOException{
+	public void calculateScore(Page myPage) throws IOException{
 		double dFactor = 0.85;
 		int turn = 20;
 		HashStruc temp = new HashStruc(recman,"tempScore");
@@ -206,5 +207,21 @@ public class PageRank {
 		
 		parent.delEntry(tempURLID);
 		child.delEntry(tempURLID);
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		try{
+			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
+			Page page_storage = new Page(recman);
+			PageRank pagerank = new PageRank(recman);
+			pagerank.calculateScore(page_storage);
+			recman.commit();
+			recman.close();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 }

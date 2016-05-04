@@ -1,6 +1,7 @@
 package Search;
 
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -143,14 +144,20 @@ public class Word {
 			if(check == 0)
 			{
 				list.add(newPost);
-				invertedBodyWord.addEntry(page_id, list);
+				if(isBody)
+					invertedBodyWord.addEntry(page_id, list);
+				else
+					invertedTitleWord.addEntry(page_id, list);	
 			}
 		}
 		else
 		{
 			list = new Vector<InvertPosting>();
 			list.add(new InvertPosting(word, tf));
-			invertedBodyWord.addEntry(page_id, list);
+			if(isBody)
+				invertedBodyWord.addEntry(page_id, list);
+			else
+				invertedTitleWord.addEntry(page_id, list);
 		}
 	}
 	
@@ -394,6 +401,11 @@ public class Word {
 		
 		return  (Vector<Posting>) bodyWord.getEntry(ID);
 	}
-
-
+	
+	public FastIterator getIteratorForWordID() throws IOException
+	{
+		//return the keys
+		return word.getIterator();
+	}
+	
 }

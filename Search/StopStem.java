@@ -1,4 +1,5 @@
 package Search;
+
 import IRUtilities.*;
 import java.io.*;
 import java.util.HashSet;
@@ -18,7 +19,7 @@ public class StopStem
 		stopWords = new HashSet<String>();
 		String abc;
 		try{
-			File myFile = new File(str);
+			File myFile = new File("stopwords.txt");
 			BufferedReader br = new BufferedReader(new FileReader(myFile));
 			while ((abc = br.readLine()) != null) {
 				stopWords.add(abc);

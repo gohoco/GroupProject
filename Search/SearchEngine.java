@@ -155,6 +155,7 @@ public class SearchEngine {
 		for(String r:result)
 		{
 			PageInfoStruct pis = se.getPageInfoStruct(r);
+			System.out.println(se.getScore(r));
 			System.out.println(pis.getTitle());
 			System.out.println(pis.getURL());
 			System.out.print(pis.getLastModification() + ", ");

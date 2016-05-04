@@ -1,4 +1,5 @@
 package Search;
+
 import java.io.Serializable;
 
 public class InvertPosting implements Serializable {

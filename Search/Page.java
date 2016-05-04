@@ -1,6 +1,7 @@
 package Search;
 
 
+
 import java.io.IOException;
 import java.util.Date;
 
@@ -84,7 +85,7 @@ public class Page {
 	}
 	
 	public PageInfoStruct getPage(String id) throws IOException{
-		return (PageInfoStruct) pageInfo.getEntry(id);
+		return (PageInfoStruct)pageInfo.getEntry(id);
 	}
 	
 	public void printall() throws IOException
