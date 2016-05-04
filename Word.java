@@ -399,6 +399,11 @@ public class Word {
 		
 		return  (Vector<Posting>) bodyWord.getEntry(ID);
 	}
-
-
+	
+	public FastIterator getIteratorForWordID() throws IOException
+	{
+		//return the keys
+		return word.getIterator();
+	}
+	
 }

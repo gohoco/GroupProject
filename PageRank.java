@@ -97,7 +97,7 @@ public class PageRank {
 		}
 	}
 	
-	public static void calculateScore(Page myPage) throws IOException{
+	public void calculateScore(Page myPage) throws IOException{
 		double dFactor = 0.85;
 		int turn = 20;
 		HashStruc temp = new HashStruc(recman,"tempScore");

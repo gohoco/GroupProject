@@ -22,8 +22,8 @@ public class Scores {
 	public Vector<Double> scores;
 	public Vector<String> keyID;
 	public Vector<String> urls;
-	public Vector<Integer> maxtf;
-	public Vector<Double> sqrtdoclength;
+	public Vector<Double> newscores;
+	
 	
 
 	public double getScore(String id)
@@ -42,11 +42,13 @@ public class Scores {
 				double c = x.getScore(id);
 				int d = keyID.indexOf(id);
 				c *= scores.get(d);
+				
+				//recman.commit();
+				recman.close();
 				return c;
 			}
 		}
 		catch (Exception e){
-			//System.out.println("some error");
 			return 0;
 		}
 	}
@@ -54,7 +56,7 @@ public class Scores {
 	public Vector<String> gettop50()
 	{
 		Vector<String> a = get50();
-		Vector<Double> b = get50score();
+		Vector<Double> b = (Vector<Double>)get50score().clone();
 		try{
 			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
 			PageRank x = new PageRank(recman);
@@ -79,6 +81,8 @@ public class Scores {
 				b.setElementAt(-1.0, z);
 			}
 			
+			//recman.commit();
+			recman.close();
 			return c;
 		}
 		catch (Exception e){
@@ -188,6 +192,8 @@ public class Scores {
 					}
 				}
 			}
+			recman.commit();
+			recman.close();
 			return y;
 		}
 		catch (Exception e){
@@ -200,15 +206,14 @@ public class Scores {
 		scores = new Vector<Double>(0);
 		urls = new Vector<String>(0);
 		keyID = new Vector<String>(0);
-		maxtf = new Vector<Integer>(0);
-		sqrtdoclength = new Vector<Double>(0);
-		//trial = new Vector<String>(0);
+		
 		
 		try{
 			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
 			Page page_storage = new Page(recman);
 			Word word_storage = new Word(recman);
 			FastIterator fi = page_storage.getIteratorForPageID();
+			Prescores prescores = new Prescores(recman);
 			String key;
 			PageInfoStruct pis;
 			
@@ -220,7 +225,6 @@ public class Scores {
 				keyID.addElement(key);
 				urls.addElement(pis.getURL());
 				
-				/*input sqrtdoclength of all pages*/
 				Vector<InvertPosting> ibw = word_storage.getIBodyWord(key);
 				String title = pis.getTitle();
 				Vector<String> title1 = new Vector<String> (0);
@@ -229,47 +233,16 @@ public class Scores {
 					title1.add(s);
 				}
 				
-				int x = 0;
-				double y = 0;
+				
+				
+				int x = prescores.getmaxtf(key);
+				double y = prescores.getsqrtdoclength(key);
 				String z = "0 0";
 				double pscore = 0;
-				if(ibw != null && ibw.size() > 0)
-				{
-					for(int i = 0; i<ibw.size(); i++)
-					{
-						int freq = ibw.get(i).freq;
-						if(freq > x)
-						{
-							x=freq;
-						}
-					}
-				}
-				maxtf.add(x);
-				
-				/*input sqrtdoclength of all pages*/
-				if(ibw != null && ibw.size() > 0)
-				{
-					for(int i = 0; i<ibw.size(); i++)
-					{
-						int freq = ibw.get(i).freq;
-						
-						z=ibw.get(i).word_id;
-						String k = word_storage.getWordID(z);
-						Vector<Posting> abc = word_storage.getBodyWord(k);
-						int df = 0;
-						if(abc != null)
-							df = abc.size();
-						
-						if(x!=0 && df!=0)
-							y += Math.pow(((double)freq/x)*Math.log((double)300/df)/Math.log(2), 2);
-						
-					}
-				}
-				sqrtdoclength.add(Math.sqrt(y));
 				
 				//calculation of scores
 				int qlength = a.size()+b.size();
-				double base = Math.sqrt(y) * Math.sqrt(qlength);
+				double base = y * Math.sqrt(qlength);
 				for(int i = 0; i<a.size(); i++)
 				{
 					String k = word_storage.getWordID(a.get(i));
@@ -284,17 +257,19 @@ public class Scores {
 								break;
 							}
 						}
-						Vector<Posting> abc = word_storage.getBodyWord(k);
-						int df = 0;
-						if(abc != null)
-							df = abc.size();
 						
-						if(x!=0 && df!=0)
-							pscore += ((double)freq/x)*Math.log((double)300/df)/Math.log(2);
+						double idf = prescores.getidf(k);
+						
+						
+						if(x!=0 && idf!=0)
+							pscore += ((double)freq/x)*idf;
 					}
 				}
 				
+				
+				
 				/*phrase search*/
+				
 				for(int i = 0; i<b.size(); i++)
 				{
 					int df = pdf(b.get(i));
@@ -348,6 +323,8 @@ public class Scores {
 					}
 					pscore += pscore1;
 				}
+				
+				
 				int favor = 0;
 				for(int i = 0; i< a.size(); i++)
 				{
@@ -388,6 +365,9 @@ public class Scores {
 				
 			}
 			
+			recman.commit();
+			recman.close();
+			
 		}
 		catch (Exception e){
 			e.printStackTrace();
@@ -410,24 +390,36 @@ public class Scores {
 		for(int i = 0; i< y.size(); i++)
 			System.out.println(y.get(i));
 		System.out.println();
+		
+		Vector<Double> abc = x.get50score();
+		for(int i = 0; i< abc.size(); i++)
+			System.out.println(abc.get(i));
+		System.out.println();
+		
+		
 		Vector<String> z = x.gettop50();
 		for(int i = 0; i< z.size(); i++)
 			System.out.println(z.get(i));
 		System.out.println();
+		
+		/*
 		try{
 			RecordManager recman = RecordManagerFactory.createRecordManager("searchEngine");
 			PageRank ab = new PageRank(recman);
 			Page page = new Page(recman);
-			ab.calculateScore(page);
+			
+			//ab.calculateScore(page);
 			Vector<String> c = new Vector<String>(0);
 			for(int i = 0; i<x.keyID.size(); i++)
 			{
 				System.out.println(ab.getScore(x.keyID.get(i)));
 			}
+			recman.close();
 		}
 		catch (Exception e){
 			e.printStackTrace();
 		}
+		*/
 		
 	}
 
