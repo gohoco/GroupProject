@@ -1,3 +1,4 @@
+package Search;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -23,9 +24,11 @@ public class SearchEngine {
 	public SearchEngine(String stopwordpath) throws IOException{
 		stopwordtxt = stopwordpath;
 		recman = RecordManagerFactory.createRecordManager("searchEngine");
+		//		recman = RecordManagerFactory.createRecordManager("/opt/tomcat/webapps/intrasearch/searchEngine");
 		page_storage = new Page(recman);
 		pagerank = new PageRank(recman);
 		word_storage = new Word(recman);
+		pageScore = null;
 	}
 	
 	public PageInfoStruct getPageInfoStruct(String id) throws IOException{
@@ -48,7 +51,13 @@ public class SearchEngine {
 		return cl;
 	}
 	
-	public Vector<String> search(String input){
+	public double getScore(String id){
+		if(pageScore != null)
+			return pageScore.getScore(id);
+		return -1;
+	}
+	
+	public Vector<String> search(String input) throws IOException{
 		
 		Vector<String> query = new Vector<String>();
 		StopStem ss = new StopStem(stopwordtxt);
@@ -106,9 +115,9 @@ public class SearchEngine {
 						
 		}
 		
-//		for(int i=0; i<phrase.size();i++){
-//			System.out.println(i+": "+phrase.get(i));
-//		}
+		for(int i=0; i<phrase.size();i++){
+			System.out.println(i+": "+phrase.get(i));
+		}
 		
 		for(int i=0; i<singleWord.size();i++)
 		{
@@ -120,8 +129,8 @@ public class SearchEngine {
 				singleWord.set(i, ss.stem(singleWord.get(i)));
 		}
 		
-//		for(String temp2: singleWord)
-//			System.out.println(temp2);
+		for(String temp2: singleWord)
+			System.out.println(temp2);
 		
 //		System.out.println(singleWord.size());
 		//---------------combine result---------------

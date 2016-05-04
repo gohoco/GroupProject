@@ -133,7 +133,7 @@ public class Word {
 		if(list != null)
 		{
 			int check = 0;
-			InvertPosting newPost = new InvertPosting(word, tf);
+			InvertPosting newPost = new InvertPosting((String)wordID.getEntry(word), tf);
 			for(InvertPosting p: list)
 			{
 				if(word.equals(p.word_id) && tf==p.freq)
@@ -142,14 +142,20 @@ public class Word {
 			if(check == 0)
 			{
 				list.add(newPost);
-				invertedBodyWord.addEntry(page_id, list);
+				if(isBody)
+					invertedBodyWord.addEntry(page_id, list);
+				else
+					invertedTitleWord.addEntry(page_id, list);	
 			}
 		}
 		else
 		{
 			list = new Vector<InvertPosting>();
-			list.add(new InvertPosting(word, tf));
-			invertedBodyWord.addEntry(page_id, list);
+			list.add(new InvertPosting((String)wordID.getEntry(word), tf));
+			if(isBody)
+				invertedBodyWord.addEntry(page_id, list);
+			else
+				invertedTitleWord.addEntry(page_id, list);
 		}
 	}
 	
