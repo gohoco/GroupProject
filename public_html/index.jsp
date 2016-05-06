@@ -50,7 +50,7 @@
    if(request.getParameter("txtname") != null && request.getParameter("txtname") != "")
    {
         String input = request.getParameter("txtname");
-        String stopwordtxt = application.getRealPath("/") + "stopwords.txt";
+        String stopwordtxt = "stopwords.txt";
         SearchEngine se = new SearchEngine(stopwordtxt);
         Vector<String> result_id = new Vector<String>();
         result_id = se.search(input);
@@ -101,12 +101,12 @@
                 Vector<String> cl = se.getChildLink(r);
                 
                 
-                out.println("<tr><td valign=\"top\">"+se.getScore(r)+"</td>");
+                out.println("<tr><td valign=\"top\">"+"<b>Score: </b>"+se.getScore(r)+"</td>");
                 out.println("<td>");
                 
                 out.println("<a href=\""+pis.getURL()+"\"> "+pis.getTitle()+"</a><br/>");
 			    out.println("<a href=\""+pis.getURL()+"\"> "+pis.getURL()+"</a><br/>");
-			    out.println(pis.getLastModification()+", "+pis.getPageSize()+"<br/>");
+			    out.println("<b>Last modification date: </b>"+pis.getLastModification()+", <b>Size of page: </b>"+pis.getPageSize()+"<br/>");
                 
                 String temp = "";
                 for(InvertPosting in:ip)
@@ -118,13 +118,15 @@
                 }
                 out.println("<br/>");
                 
+                out.println("<b>Parent link(s):</b><br/>");
                 for(String p:pl)
                     out.println(p + "<br/>");
                 
+                out.println("<b>Child link(s):</b><br/>");
                 for(String c:cl)
 				    out.println(c + "<br/>");
     
-                out.println("<input type=\"button\" onclick=\"location.href='http://52.193.232.178:8080/intrasearch/index.jsp?txtname=" +temp+ "';\" value=\"Get similar pages\" >" + "</input>");
+                out.println("<input type=\"button\" onclick=\"location.href='index.jsp?txtname=" +temp+ "';\" value=\"Get similar pages\" >" + "</input>");
                 
                 out.println("<br/></td></tr>");
                 
