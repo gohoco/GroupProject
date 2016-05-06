@@ -59,7 +59,7 @@ public class Scores {
 		{
 			double e = abc[y-1-i];
 			int z = c.indexOf(e);
-			b.add(a.get(i));
+			b.add(a.get(z));
 			c.setElementAt(-1.0, z);
 		}
 		
